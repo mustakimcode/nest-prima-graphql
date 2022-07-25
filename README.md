@@ -39,5 +39,7 @@ This project involves a simple users graphql API implementing CRUD functionaliti
 
 - Explore the API using Postman from [here](https://www.getpostman.com/collections/429ed2106370a091777f)
 
-- Make sure select authentication using basic auth with admin as username and admin as password
+- Make sure to create user with your username and password before using the schema or get the username from db with "admin" as the password
+
+
 
