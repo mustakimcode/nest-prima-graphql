@@ -1,0 +1,50 @@
+type User {
+  id: ID!
+  username: String!
+  name: String!
+  address: String!
+  phone_number: String!
+  createdAt: String!
+}
+
+type UserToken {
+  token: String!
+}
+
+input NewUser {
+  username: String!
+  name: String!
+  address: String!
+  phone_number: String!
+  password: String!
+}
+
+input SearchUser {
+  username: String
+  address: String
+  phone_number: String
+}
+
+input LoginUser {
+  username: String!
+  password: String!
+}
+
+input UpdateUser {
+  id: ID!
+  username: String!
+  name: String!
+  address: String!
+  phone_number: String!
+  password: String!
+}
+
+type Query {
+  users(filter: SearchUser): [User]!
+}
+
+type Mutation {
+  createUser(input: NewUser): User!
+  updateUser(input: UpdateUser): User
+  deleteUser(id: ID!): User
+}
