@@ -16,6 +16,9 @@ This project involves a simple users graphql API implementing CRUD functionaliti
   npm install
   ```
   
+ - Copy .env.example and rename to .env
+ - change postgres db url to yours
+  
   - Create db tables  
   ```bash
   npx prisma migrate dev --name init_user_table
@@ -31,15 +34,15 @@ This project involves a simple users graphql API implementing CRUD functionaliti
   npm run generate:graphql:classes
   ```
 
-- Start the project:
+  - Start the project:
 
   ```bash
   npm run start:dev
   ```
 
-- Explore the API using Postman from [here](https://www.getpostman.com/collections/429ed2106370a091777f)
+  - Explore the API using Postman from [here](https://www.getpostman.com/collections/429ed2106370a091777f)
 
-- Make sure to create user with your username and password before using the schema or get the username from db with "admin" as the password
+  - Make sure to create user with your username and password before using the schema or get the username from db with "admin" as the password
 
 
 
