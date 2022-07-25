@@ -9,7 +9,6 @@ import { AuthResolver } from './auth.resolver';
 import { GqlAuthGuard } from './gql-auth.guard';
 import { JwtModule } from '@nestjs/jwt';
 import { env } from 'process';
-import { JwtStrategy } from './jwt.strategy';
 
 @Module({
   imports: [
@@ -27,9 +26,8 @@ import { JwtStrategy } from './jwt.strategy';
     AuthService,
     LocalStrategy,
     BasicStrategy,
-    // GqlAuthGuard,
     AuthResolver,
-    JwtStrategy,
+    GqlAuthGuard,
   ],
 })
 export class AuthModule {}

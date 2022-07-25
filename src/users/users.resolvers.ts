@@ -1,17 +1,17 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Context } from '@nestjs/graphql';
 import { UserService } from './users.service';
 import { NewUser, UpdateUser, SearchUser } from 'src/graphql';
 import { UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { AuthGuard } from '@nestjs/passport';
+import { GqlAuthGuard } from 'src/auth/gql-auth.guard';
 
 @Resolver('User')
 export class UserResolvers {
   constructor(private readonly userService: UserService) {}
 
   @Query('users')
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(GqlAuthGuard)
   async user(@Args('filter') args: SearchUser) {
-    console.log(args);
     return this.userService.users(args);
   }
 
@@ -20,13 +20,13 @@ export class UserResolvers {
     return this.userService.createUser(args);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(GqlAuthGuard)
   @Mutation('updateUser')
   async update(@Args('input') args: UpdateUser) {
     return this.userService.updateUser(args);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(GqlAuthGuard)
   @Mutation('deleteUser')
   async delete(@Args('id') args: string) {
     return this.userService.deleteUser(args);
