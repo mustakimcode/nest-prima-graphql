@@ -1,11 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { NewUser, UpdateUser, SearchUser, User } from 'src/graphql';
-import {
-  AuthenticationError,
-  UserInputError,
-  ValidationError,
-} from 'apollo-server-express';
+import { ValidationError } from 'apollo-server-express';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
@@ -58,19 +54,29 @@ export class UserService {
   // Update a user
   async updateUser(params: UpdateUser): Promise<any> {
     const { id, username, name, address, phone_number, password } = params;
-    const hashedPassword = await bcrypt.hash(password, 10);
-    return this.prisma.user.update({
+    const userExists = await this.prisma.user.count({
       where: {
         id: parseInt(id),
       },
-      data: {
-        ...(username && { username }),
-        ...(name && { name }),
-        ...(address && { address }),
-        ...(phone_number && { phone_number }),
-        ...(password && { password: hashedPassword }),
-      },
     });
+
+    if (userExists == 0) {
+      throw new ValidationError("User Doesn't esixt!!");
+    } else {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      return await this.prisma.user.update({
+        where: {
+          id: parseInt(id),
+        },
+        data: {
+          ...(username && { username }),
+          ...(name && { name }),
+          ...(address && { address }),
+          ...(phone_number && { phone_number }),
+          ...(password && { password: hashedPassword }),
+        },
+      });
+    }
   }
 
   // delete a user
